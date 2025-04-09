@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinito '25 Registrations</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #141428;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: radial-gradient(circle at top right, rgba(74, 47, 189, 0.2) 0%, transparent 70%),
+                        radial-gradient(circle at bottom left, rgba(149, 46, 191, 0.15) 0%, transparent 70%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .table-container {
+      background: rgba(30, 30, 50, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(128, 71, 248, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .table-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #6e2aff, #a44bc5, #6e2aff);
+      background-size: 200% 100%;
+      animation: gradient 4s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    
+    .refined-text {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #fff, #b095e6, #fff);
+      background-size: 200% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: shine 5s linear infinite;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+    
+    @keyframes shine {
+      to {background-position: 200% center;}
+    }
+    
+    .header-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .registration-count {
+      background: rgba(111, 76, 183, 0.3);
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      color: #b89fff;
+    }
+    
+    .table {
+      color: #e0e0e0;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    
+    .table thead th {
+      background-color: rgba(74, 47, 189, 0.2);
+      color: #b89fff;
+      font-weight: 600;
+      border: none;
+      padding: 12px 15px;
+      position: relative;
+    }
+    
+    .table thead th:first-child {
+      border-top-left-radius: 10px;
+    }
+    
+    .table thead th:last-child {
+      border-top-right-radius: 10px;
+    }
+    
+    .table tbody tr {
+      background-color: rgba(30, 30, 50, 0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .table tbody tr:hover {
+      background-color: rgba(111, 76, 183, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .table td {
+      padding: 12px 15px;
+      border-top: 1px solid rgba(128, 71, 248, 0.1);
+      vertical-align: middle;
+    }
+    
+    .table-pagination {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .page-link {
+      background-color: rgba(30, 30, 50, 0.7);
+      border: 1px solid rgba(128, 71, 248, 0.3);
+      color: #b89fff;
+      margin: 0 5px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .page-link:hover, .page-link:focus {
+      background-color: rgba(111, 76, 183, 0.3);
+      border-color: rgba(128, 71, 248, 0.5);
+      color: #fff;
+      box-shadow: 0 0 10px rgba(111, 76, 183, 0.3);
+    }
+    
+    .page-item.active .page-link {
+      background: linear-gradient(45deg, #6e2aff, #a44bc5);
+      border-color: transparent;
+    }
+    
+    .btn-infinito {
+      background: linear-gradient(45deg, #6e2aff, #a44bc5);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .btn-infinito:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(106, 42, 255, 0.4);
+      color: white;
+    }
+    
+    .btn-infinito::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #a44bc5, #6e2aff);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .btn-infinito:hover::after {
+      opacity: 1;
+    }
+    
+    .search-container {
+      margin-bottom: 20px;
+    }
+    
+    .search-input {
+      background-color: rgba(18, 18, 37, 0.6);
+      border: 1px solid rgba(111, 76, 183, 0.3);
+      border-radius: 10px;
+      color: #fff;
+      padding: 10px 15px;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      background-color: rgba(24, 24, 45, 0.8);
+      border-color: #8a5cf5;
+      box-shadow: 0 0 0 0.25rem rgba(138, 92, 245, 0.25);
+      outline: none;
+    }
+    
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .game-badge {
+      background: rgba(111, 76, 183, 0.3);
+      color: #b89fff;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      display: inline-block;
+    }
+    
+    .no-data {
+      text-align: center;
+      padding: 50px 20px;
+      color: #a98bf8;
+      font-style: italic;
+    }
+    
+    @media (max-width: 768px) {
+      .table-container {
+        padding: 20px 10px;
+      }
+      
+      .refined-text {
+        font-size: 2rem;
+      }
+      
+      .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  
+  <div class="container">
+    <div class="table-container">
+      <div class="header-info mb-4">
+        <div>
+          <h1 class="refined-text">Registrations</h1>
+          <p class="text-muted">Infinito '25 Event Participants</p>
+        </div>
+        <div class="registration-count">
+          Total Registrations: {{ total_count }}
+        </div>
+      </div>
+      
+      <div class="row mb-4">
+       
+        <div class="col-md-6 text-md-end">
+          <a href="{% url 'register' %}" class="btn-infinito">
+            <i class="fas fa-arrow-left me-2"></i> Back to Home
+          </a>
+        </div>
+      </div>
+      
+      {% if registrations %}
+        <div class="table-responsive">
+          <table class="table" id="registrationsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Registration No.</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Hostel</th>
+                <th>Room No.</th>
+                <th>Game</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for registration in registrations %}
+                <tr>
+                  <td>{{ registration.id }}</td>
+                  <td>{{ registration.name }}</td>
+                  <td>{{ registration.registration_number }}</td>
+                  <td>{{ registration.vit_email }}</td>
+                  <td>{{ registration.phone }}</td>
+                  <td>{{ registration.hostel }}</td>
+                  <td>{{ registration.room_number }}</td>
+                  <td><span class="game-badge">{{ registration.game_playing }}</span></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Simple Pagination - You can enhance this with Django Pagination -->
+        {% if registrations.has_other_pages %}
+          <div class="table-pagination">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                {% if registrations.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ registrations.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                {% endif %}
+                
+                {% for i in registrations.paginator.page_range %}
+                  {% if registrations.number == i %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                  {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                
+                {% if registrations.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ registrations.next_page_number }}" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="no-data">
+          <p>No registrations found.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <script>
+    // Create stars
+    function createStars() {
+      const stars = document.getElementById('stars');
+      const starCount = 100;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        star.style.left = `${x}%`;
+        star.style.top = `${y}%`;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        // Random opacity and animation
+        star.style.opacity = Math.random() * 0.7 + 0.3;
+        star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite alternate`;
+        
+        stars.appendChild(star);
+      }
+    }
+    
+    // Search functionality
+    function setupSearch() {
+      const searchInput = document.getElementById('searchInput');
+      const table = document.getElementById('registrationsTable');
+      const rows = table.getElementsByTagName('tr');
+      
+      searchInput.addEventListener('keyup', function() {
+        const query = searchInput.value.toLowerCase();
+        
+        // Skip the header row (index 0)
+        for (let i = 1; i < rows.length; i++) {
+          const cells = rows[i].getElementsByTagName('td');
+          let found = false;
+          
+          for (let j = 0; j < cells.length; j++) {
+            const cellText = cells[j].textContent || cells[j].innerText;
+            
+            if (cellText.toLowerCase().indexOf(query) > -1) {
+              found = true;
+              break;
+            }
+          }
+          
+          rows[i].style.display = found ? '' : 'none';
+        }
+      });
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      createStars();
+      
+      // Setup search if there are registrations
+      if (document.getElementById('searchInput') && document.getElementById('registrationsTable')) {
+        setupSearch();
+      }
+    });
+    
+    // Add CSS animation for twinkling stars
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        0% { opacity: 0.3; }
+        100% { opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
