@@ -34,7 +34,12 @@ SECRET_KEY = 'django-insecure-r99!ia7^e4df&iqmx4hsfsl_&mxrxwgq5-^tb%=suluywfid%p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://infinito-yj4w.onrender.com/']
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Optional: for WhiteNoise
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 
 # Application definition
