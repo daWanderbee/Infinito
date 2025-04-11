@@ -23,6 +23,9 @@ class Student(models.Model):
         ('E', 'E Block'),
         ('F', 'F Block'),
         ('G', 'G Block'),
+        ('H', 'H Block'),
+        ('I', 'I Block'),
+        ('J', 'J Block'),
     ]
 
     name = models.CharField(max_length=100)
